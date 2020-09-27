@@ -1,7 +1,7 @@
 OPTIMIZER := FunctionInfo.so
 OPT_PASSES := -function-info
 
-LLVM_VERSION ?= 6.0
+LLVM_VERSION ?= 7
 
 CXXFLAGS := $(shell llvm-config-$(LLVM_VERSION) --cxxflags)
 
