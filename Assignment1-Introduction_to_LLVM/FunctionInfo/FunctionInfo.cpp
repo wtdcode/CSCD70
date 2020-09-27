@@ -20,7 +20,11 @@ public:
 	{
 		AU.setPreservesAll();
 	}
-
+	/*
+	 * The runOnModule method performs the interesting work of the pass. 
+	 * It should return true if the module was modified by the transformation 
+	 * and false otherwise.
+	 */
 	virtual bool runOnModule(Module & M) override
 	{
 		outs() << "CSCD70 Functions Information Pass" << "\n";
