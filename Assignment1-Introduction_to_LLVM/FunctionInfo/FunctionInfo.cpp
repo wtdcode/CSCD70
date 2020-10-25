@@ -37,6 +37,8 @@ public:
 			std::size_t arguments_count = 0;
 			std::size_t bblocks_count = 0;
 			std::size_t calls_count = 0;
+			std::size_t calls_alternative = 0;
+			std::size_t called_count = 0;
 			outs() << "Name: " << it->getName() << "\n" \
 				   << "ID: " << it->getGlobalIdentifier() << "\n";
 			instruction_count = it->getInstructionCount();
@@ -48,8 +50,21 @@ public:
 				for(auto instr = bb->begin(); instr != bb->end(); instr++)
 					if(auto callistr = dyn_cast<CallInst>(instr))
 						calls_count +=1;
+			// Alternative implementation
+			for(auto it2 = M.begin(); it2 != M.end() ;it2 ++){
+				for(auto u = it2->user_begin(); u!=it2->user_end(); u++){
+					if(auto instr = dyn_cast<Instruction>(*u)){
+						if(instr->getFunction()->getGlobalIdentifier() == it->getGlobalIdentifier()){
+							calls_alternative ++;
+						}
+					}
+				}
+			}
+			called_count = it->getNumUses();
 			outs() << "Args: " << arguments_count << "\n" \
 			   << "Calls: " << calls_count << "\n" \
+			   << "Calls2: " << calls_alternative << "\n" \
+			   << "Called: " << called_count << "\n" \
 			   << "Blocks: " << bblocks_count << "\n" \
 			   << "Insts: "  << instruction_count << "\n";
 		}
