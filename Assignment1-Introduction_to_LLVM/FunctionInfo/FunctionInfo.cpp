@@ -44,9 +44,10 @@ public:
 				arguments_count += 1;
 			auto& bblist = it->getBasicBlockList();
 			bblocks_count = bblist.size();
-			for(auto instr = it->begin(); instr != it->end(); instr++)
-				if(auto callistr = dyn_cast<CallInst>(instr))
-					calls_count +=1;
+			for(auto bb = it->begin(); bb != it->end(); bb++)
+				for(auto instr = bb->begin(); instr != bb->end(); instr++)
+					if(auto callistr = dyn_cast<CallInst>(instr))
+						calls_count +=1;
 			outs() << "Args: " << arguments_count << "\n" \
 			   << "Calls: " << calls_count << "\n" \
 			   << "Blocks: " << bblocks_count << "\n" \
